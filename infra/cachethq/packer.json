@@ -1,0 +1,54 @@
+{
+  "variables": {
+    "ansible_private_key_file": "{{env `HOME`}}/.ssh/xebicon-incidents-automation.pem",
+    "Region":     "{{env `REGION`}}",
+    "SubnetId":   "{{env `SUBNET_ID`}}",
+    "VpcId":      "{{env `VPC_ID`}}",
+    "ProjectId":  "{{env `PROJECT_ID`}}",
+    "Project":    "{{env `PROJECT`}}",
+    "Owner":      "{{env `OWNER`}}"
+  },
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./playbooks/provision_tmp_instance.yml",
+      "user": "ubuntu"
+    }
+  ],
+  "builders": [{
+    "type":   "amazon-ebs",
+    "region": "{{user `Region`}}",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "source_ami":     "ami-07174474",
+    "instance_type":  "t2.medium",
+    "ssh_username":   "ubuntu",
+    "ami_name": "{{user `ProjectId`}}-{{timestamp}}",
+    "ami_virtualization_type": "hvm",
+    "availability_zone": "{{user `Region`}}a",
+    "ssh_keypair_name": "{{user `ProjectId`}}",
+    "ssh_private_key_file": "{{user `ansible_private_key_file`}}",
+    "vpc_id":     "{{user `VpcId`}}",
+    "subnet_id":  "{{user `SubnetId`}}",
+    "run_tags": {
+      "Name":         "{{user `Project`}} - Temporary instance for Packer",
+      "Project":      "{{user `Project`}}",
+      "Owner":        "{{user `Owner`}}"
+    },
+    "tags": {
+      "Name":         "{{user `Project`}} - AMI {{timestamp}} [by Packer]",
+      "Origin":       "Packer",
+      "Project":      "{{user `Project`}}",
+      "Owner":        "{{user `Owner`}}"
+    },
+    "launch_block_device_mappings": [
+      {
+        "device_name": "/dev/sda1",
+        "volume_size": 20,
+        "volume_type": "gp2",
+        "delete_on_termination": true
+      }
+    ]
+  }]
+}
+

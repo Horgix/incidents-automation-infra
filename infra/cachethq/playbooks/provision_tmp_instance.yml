@@ -1,0 +1,24 @@
+---
+- hosts: all
+  gather_facts: False
+  # Thanks https://github.com/ansible/ansible/issues/14199
+  become_user: root
+  roles: []
+  #- bootstrap_python
+
+  #- hosts: tag_Environment_Build
+  #  # Thanks https://github.com/ansible/ansible/issues/14199
+  #  become_user: root
+  #  roles:
+  #    - base
+  #    - telegraf
+  #    - td_agent
+  #    - redis
+  #    - gunicorn
+  #    - appdynamics_proxy
+  #    - simple_python_app
+  #    - connect
+  #    - nginx
+  #    #- awslogs
+  #    - logrotate
+  #    - remove_authorized_keys
