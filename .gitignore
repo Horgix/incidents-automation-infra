@@ -1,3 +1,6 @@
 # Terarform
 .terraform/
 terraform.tfstate.backup
+
+# Python
+venv/
