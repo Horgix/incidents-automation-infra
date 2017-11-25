@@ -1,0 +1,10 @@
+---
+- name: "Setup packages"
+  include: packages.yml
+  tags:
+    - packages
+
+- name: "Setup motd"
+  include: motd.yml
+  tags:
+    - motd

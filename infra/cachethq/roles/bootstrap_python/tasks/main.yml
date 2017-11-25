@@ -1,0 +1,8 @@
+---
+- name: "Update packages list"
+  become: True
+  raw: apt-get update
+
+- name: "Bootstrap python"
+  become: True
+  raw: apt-get install -y python

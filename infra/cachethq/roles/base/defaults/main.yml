@@ -1,0 +1,6 @@
+---
+base_packages:
+  - htop
+  - vim
+  - python-pip
+  - net-tools

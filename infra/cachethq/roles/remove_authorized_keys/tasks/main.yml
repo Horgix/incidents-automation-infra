@@ -1,0 +1,6 @@
+---
+- name: "Remove authorized_keys"
+  file:
+    path:   "~/.ssh/authorized_keys"
+    state:  absent
+  when: not skip_remove_authorized_keys
